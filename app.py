@@ -44,3 +44,27 @@ def db_create():
 
     return "Basketball table created successfully!"
 
+
+@app.route('/db_insert')
+def db_insert():
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    players = [
+        ("Jayson Tatum", "Boston Celtics", "Forward"),
+        ("Stephen Curry", "Golden State Warriors", "Guard"),
+        ("Nikola Jokic", "Denver Nuggets", "Center"),
+        ("Jimmy Thomas", "CU Boulder", "Forward")
+    ]
+
+    cur.executemany(
+        "INSERT INTO Basketball (name, team, position) VALUES (%s, %s, %s);",
+        players
+    )
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return "Basketball data inserted successfully!"
+
