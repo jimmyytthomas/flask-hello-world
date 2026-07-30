@@ -87,3 +87,17 @@ def db_select():
 
     return output
 
+
+@app.route('/db_drop')
+def db_drop():
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("DROP TABLE IF EXISTS Basketball;")
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return "Basketball table dropped successfully!"
+
