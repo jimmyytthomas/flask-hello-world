@@ -23,3 +23,24 @@ def db_test():
         return "Database connection successful!"
     except Exception as e:
         return f"Database connection failed: {e}"
+
+@app.route('/db_create')
+def db_create():
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS Basketball (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100),
+            team VARCHAR(100),
+            position VARCHAR(50)
+        );
+    """)
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return "Basketball table created successfully!"
+
