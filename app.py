@@ -68,3 +68,22 @@ def db_insert():
 
     return "Basketball data inserted successfully!"
 
+
+@app.route('/db_select')
+def db_select():
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM Basketball;")
+    rows = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    output = ""
+
+    for row in rows:
+        output += f"{row}<br>"
+
+    return output
+
